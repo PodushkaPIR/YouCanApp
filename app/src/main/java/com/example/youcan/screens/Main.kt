@@ -3,7 +3,6 @@ package com.example.youcan.screens
 import android.app.Application
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,11 +30,8 @@ import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
 
 @Composable
-fun MainScreen(navController: NavHostController){
-    val context = LocalContext.current
-    val mViewModel: MainViewModel =
-        viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
-
+fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
+    val notes = viewModel.readAllNotes().observeAsState(listOf()).value
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
@@ -50,12 +46,11 @@ fun MainScreen(navController: NavHostController){
             }
         }
     ) {
-//        LazyColumn {
-//            items(notes){
-//                    note ->
-//                    NoteItem(note = note, navController = navController)
-//            }
-//        }
+        LazyColumn{
+            items(notes) { note ->
+                NoteItem(note = note, navController = navController)
+            }
+        }
     }
 }
 
@@ -88,6 +83,9 @@ fun NoteItem (note: Note, navController: NavHostController){
 @Composable
 fun PrevMainScreen(){
     YouCanTheme {
-        MainScreen(navController = rememberNavController())
+        val context = LocalContext.current
+        val mViewModel: MainViewModel =
+            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+        MainScreen(navController = rememberNavController(), viewModel = mViewModel)
     }
 }
