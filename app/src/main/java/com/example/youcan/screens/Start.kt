@@ -38,8 +38,10 @@ fun StartScreen(navController: NavHostController) {
             Text(text = "What we will use")
             Button(
                 onClick = {
-                    mViewModel.innitDatabase(TYPE_ROOM)
-                    navController.navigate(route = NavRoute.Main.route)
+                    mViewModel.innitDatabase(TYPE_ROOM){
+                        navController.navigate(route = NavRoute.Main.route)
+
+                    }
                 },
                 modifier = Modifier
                     .width(200.dp)
@@ -49,8 +51,10 @@ fun StartScreen(navController: NavHostController) {
             }
             Button(
                 onClick = {
-                    mViewModel.innitDatabase(TYPE_FIREBASE)
-                    navController.navigate(route = NavRoute.Main.route)
+                    mViewModel.innitDatabase(TYPE_FIREBASE) {
+                        navController.navigate(route = NavRoute.Main.route)
+
+                    }
                 },
                 modifier = Modifier
                     .width(200.dp)
