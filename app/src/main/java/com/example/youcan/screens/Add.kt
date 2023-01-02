@@ -24,6 +24,7 @@ import com.example.youcan.MainViewModelFactory
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
+import com.example.youcan.utils.Constants
 import androidx.compose.material.Text as Text
 
 @Composable
@@ -38,7 +39,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Add new note",
+                text = Constants.Keys.ADD_NEW_NOTE,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 8.dp)
@@ -50,7 +51,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                     title = it
                     isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
                 },
-                label = { Text(text = "Note title") },
+                label = { Text(text = Constants.Keys.NOTE_TITLE) },
                 isError = title.isEmpty()
             )
             OutlinedTextField(
@@ -59,7 +60,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                     subtitle = it
                     isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
                     },
-                label = { Text(text = "Note title") },
+                label = { Text(text = Constants.Keys.NOTE_SUBTITLE) },
                 isError = subtitle.isEmpty()
             )
 
@@ -72,7 +73,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                     }
                 }
             ) {
-                Text(text = "Add note")
+                Text(text = Constants.Keys.ADD_NOTE)
             }
         }
     }
@@ -85,6 +86,10 @@ fun PrevAddScreen(){
         val context = LocalContext.current
         val mViewModel: MainViewModel =
             viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
-        NoteScreen(navController = rememberNavController(), viewModel = mViewModel)
+        NoteScreen(
+            navController = rememberNavController(),
+            viewModel = mViewModel,
+            noteId = "1"
+        )
     }
 }

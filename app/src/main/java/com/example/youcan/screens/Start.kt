@@ -18,6 +18,7 @@ import com.example.youcan.MainViewModel
 import com.example.youcan.MainViewModelFactory
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
+import com.example.youcan.utils.Constants
 import com.example.youcan.utils.TYPE_FIREBASE
 import com.example.youcan.utils.TYPE_ROOM
 
@@ -35,7 +36,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(text = "What we will use")
+            Text(text = Constants.Keys.WHAT_WE_WILL_USE)
             Button(
                 onClick = {
                     mViewModel.innitDatabase(TYPE_ROOM){
@@ -47,7 +48,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                     .width(200.dp)
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Room database")
+                Text(text = Constants.Keys.ROOM_DATABASE)
             }
             Button(
                 onClick = {
@@ -60,7 +61,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                     .width(200.dp)
                     .padding(vertical = 8.dp)
             ) {
-                Text(text = "Firebase database")
+                Text(text = Constants.Keys.FIREBASE_DATABASE)
             }
         }
     }

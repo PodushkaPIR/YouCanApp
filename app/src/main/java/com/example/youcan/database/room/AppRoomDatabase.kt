@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.youcan.database.room.dao.NoteRoomDao
 import com.example.youcan.model.Note
+import com.example.youcan.utils.Constants.Keys.NOTES_DATABASE
 
 @Database(entities = [Note::class], version = 1)
 abstract class AppRoomDatabase : RoomDatabase() {
@@ -21,7 +22,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
                 INSTANCE = Room.databaseBuilder(
                     context,
                     AppRoomDatabase::class.java,
-                    "notes_database"
+                    NOTES_DATABASE
                 ).build()
                 INSTANCE as AppRoomDatabase
             } else INSTANCE as AppRoomDatabase
