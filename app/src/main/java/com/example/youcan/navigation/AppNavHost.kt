@@ -1,6 +1,7 @@
 package com.example.youcan.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -20,8 +21,7 @@ sealed class NavRoute(val route: String){
 }
 
 @Composable
-fun AppNavHost(mViewModel: MainViewModel){
-    val navController = rememberNavController()
+fun AppNavHost(mViewModel: MainViewModel, navController: NavHostController){
 
     NavHost(navController = navController, startDestination = NavRoute.Start.route){
         composable(NavRoute.Start.route){ StartScreen(navController = navController, viewModel = mViewModel) }

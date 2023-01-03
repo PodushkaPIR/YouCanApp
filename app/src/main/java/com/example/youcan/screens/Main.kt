@@ -28,6 +28,10 @@ import com.example.youcan.MainViewModelFactory
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
+import com.example.youcan.utils.Constants
+import com.example.youcan.utils.DB_TYPE
+import com.example.youcan.utils.TYPE_FIREBASE
+import com.example.youcan.utils.TYPE_ROOM
 
 @Composable
 fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
@@ -56,12 +60,17 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
 
 @Composable
 fun NoteItem (note: Note, navController: NavHostController){
+    val noteId = when(DB_TYPE.value) {
+        TYPE_FIREBASE -> note.firebaseId
+        TYPE_ROOM -> note.id
+        else -> Constants.Keys.EMPTY
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 24.dp)
             .clickable {
-                navController.navigate(NavRoute.Note.route + "/${note.id}")
+                navController.navigate(NavRoute.Note.route + "/${noteId}")
             },
         elevation = 6.dp
     ){

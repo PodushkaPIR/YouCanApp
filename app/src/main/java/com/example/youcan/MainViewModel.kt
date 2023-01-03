@@ -7,9 +7,7 @@ import com.example.youcan.database.firebase.AppFirebaseRepository
 import com.example.youcan.database.room.AppRoomDatabase
 import com.example.youcan.database.room.repository.RoomRepository
 import com.example.youcan.model.Note
-import com.example.youcan.utils.REPOSITORY
-import com.example.youcan.utils.TYPE_FIREBASE
-import com.example.youcan.utils.TYPE_ROOM
+import com.example.youcan.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -66,6 +64,18 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun readAllNotes() = REPOSITORY.readAll
+
+    fun signOut(onSuccess: () -> Unit){
+        when(DB_TYPE.value){
+            TYPE_FIREBASE,
+            TYPE_ROOM -> {
+                REPOSITORY.signOut()
+                onSuccess()
+                DB_TYPE.value = Constants.Keys.EMPTY
+            }
+            else -> { Log.d("checkData", "signOut: ELSE: ${DB_TYPE.value}")}
+        }
+    }
 }
 
 

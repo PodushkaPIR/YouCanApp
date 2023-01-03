@@ -22,13 +22,24 @@ import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
 import com.example.youcan.utils.Constants
+import com.example.youcan.utils.DB_TYPE
+import com.example.youcan.utils.TYPE_FIREBASE
+import com.example.youcan.utils.TYPE_ROOM
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteId: String?) {
     val notes = viewModel.readAllNotes().observeAsState(listOf()).value
-    val note = notes.firstOrNull { it.id == noteId?.toInt()} ?: Note(title = Constants.Keys.NONE, subtitle = Constants.Keys.NONE)
+    val note = when(DB_TYPE.value){
+        TYPE_FIREBASE -> {
+            notes.firstOrNull{ it.firebaseId == noteId } ?: Note()
+        }
+        TYPE_ROOM ->{
+            notes.firstOrNull{ it.id == noteId?.toInt() } ?: Note()
+        }
+        else -> Note()
+    }
     val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
     var title by remember { mutableStateOf(Constants.Keys.EMPTY) }
@@ -67,7 +78,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
                             viewModel.updateNote(note =
-                            Note(id = note.id, title = title, subtitle = subtitle)
+                            Note(id = note.id, title = title, subtitle = subtitle, firebaseId = note.firebaseId)
                             ){
                                 navController.navigate(NavRoute.Main.route)
                             }

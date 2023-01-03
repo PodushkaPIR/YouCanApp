@@ -1,6 +1,7 @@
 package com.example.youcan.screens
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -67,7 +68,9 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                             EMAIL = email
                             PASSWORD = password
                             viewModel.innitDatabase(TYPE_FIREBASE){
-
+                                Log.d("checkData", "Auth success")
+                                DB_TYPE.value = TYPE_FIREBASE
+                                navController.navigate(NavRoute.Main.route)
                             }
                         },
                         enabled = email.isNotEmpty() && password.isNotEmpty()
@@ -90,6 +93,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                 Button(
                     onClick = {
                         viewModel.innitDatabase(TYPE_ROOM){
+                            DB_TYPE.value = TYPE_ROOM
                             navController.navigate(route = NavRoute.Main.route)
 
                         }

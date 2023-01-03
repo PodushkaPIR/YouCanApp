@@ -1,14 +1,17 @@
 package com.example.youcan.utils
 
+import androidx.compose.runtime.mutableStateOf
 import com.example.youcan.database.DatabaseRepository
 
 const val TYPE_DATABASE = "type_database"
 const val TYPE_ROOM = "type_room"
 const val TYPE_FIREBASE = "type_firebase"
+const val FIREBASE_ID = "firebaseId"
 
 lateinit var REPOSITORY : DatabaseRepository
 lateinit var EMAIL : String
 lateinit var PASSWORD : String
+var DB_TYPE = mutableStateOf("")
 
 object Constants {
     object Keys {
@@ -18,8 +21,8 @@ object Constants {
         const val NOTE_TITLE = "Note title"
         const val NOTE_SUBTITLE = "Note subtitle"
         const val ADD_NOTE = "Add note"
-        const val TITLE = "Title"
-        const val SUBTITLE = "Subtitle"
+        const val TITLE = "title"
+        const val SUBTITLE = "subtitle"
         const val ROOM_DATABASE = "Room database"
         const val FIREBASE_DATABASE = "Firebase database"
         const val WHAT_WE_WILL_USE = "What we will use"
