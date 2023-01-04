@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "427011303603",
+    "project_id": "youcan-app-7021c",
+    "storage_bucket": "youcan-app-7021c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:427011303603:android:208c2def4cd10d6ae828c6",
+        "android_client_info": {
+          "package_name": "com.example.youcan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "427011303603-kqhf3i6m6crkpk4dubpturirph7ndc3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx_uY2GZYRzIM26Nj09XSXtSs5nPYD9YQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "427011303603-kqhf3i6m6crkpk4dubpturirph7ndc3o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
