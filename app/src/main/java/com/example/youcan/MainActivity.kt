@@ -41,7 +41,9 @@ class MainActivity : ComponentActivity() {
                                         .padding(horizontal = 16.dp),
                                     horizontalArrangement = Arrangement.SpaceBetween
                                 ) {
-                                    Text(text = "YouCanApp")
+                                    Text(
+                                        text = "WayNote"
+                                    )
                                     if (DB_TYPE.value.isNotEmpty()){
                                         Icon(
                                             imageVector = Icons.Default.ExitToApp,
@@ -59,7 +61,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }
                             },
-                            backgroundColor = Color.Blue,
+//                            backgroundColor = Color.Blue,
                             contentColor = Color.White,
                             elevation = 12.dp
                         )
