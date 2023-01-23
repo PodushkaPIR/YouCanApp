@@ -32,40 +32,6 @@ class MainActivity : ComponentActivity() {
                     viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
                 val navController = rememberNavController()
                 Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            content = {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(horizontal = 16.dp),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        text = "WayNote"
-                                    )
-                                    if (DB_TYPE.value.isNotEmpty()){
-                                        Icon(
-                                            imageVector = Icons.Default.ExitToApp,
-                                            contentDescription = "",
-                                            modifier = Modifier.clickable {
-                                                mViewModel.signOut {
-                                                    navController.navigate(NavRoute.Start.route){
-                                                        popUpTo(NavRoute.Start.route){
-                                                            inclusive = true
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        )
-                                    }
-                                }
-                            },
-//                            backgroundColor = Color.Blue,
-                            contentColor = Color.White,
-                            elevation = 12.dp
-                        )
-                    },
                     content = {
                         Surface(
                             modifier = Modifier.fillMaxSize(),

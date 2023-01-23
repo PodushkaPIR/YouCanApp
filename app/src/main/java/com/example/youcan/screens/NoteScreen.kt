@@ -4,10 +4,14 @@ import android.app.Application
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -91,16 +95,46 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
         }
     ) {
         Scaffold(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ){
+            modifier = Modifier.fillMaxWidth(),
+            topBar = {
+                TopAppBar(
+                    content = {
+                        Row (
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ){
+                            IconButton(
+                                onClick = {
+                                    navController.navigate(NavRoute.Main.route)
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.ArrowBack,
+                                    contentDescription = "nav_back"
+                                )
+                            }
+                            IconButton(
+                                onClick = {
+                                    coroutineScope.launch {
+                                    title = note.title
+                                    subtitle = note.subtitle
+                                    bottomSheetState.show()
+                                    }
+                                }
+                            ){
+                                Icon(imageVector = Icons.Rounded.Edit, contentDescription = "edit")
+                            }
+                        }
+                    },
+                    contentColor = Color.White,
+                    elevation = 12.dp
+                )
+            }) {
                 Card(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxSize()
                         .padding(32.dp)
                 ) {
                     Column(
@@ -121,46 +155,6 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                             modifier = Modifier.padding(top = 16.dp)
                         )
                     }
-                }
-
-                Row(
-                    modifier = Modifier
-                        .padding(horizontal = 32.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-
-                    Button(
-                        onClick = {
-                            coroutineScope.launch {
-                                title = note.title
-                                subtitle = note.subtitle
-                                bottomSheetState.show()
-                            }
-                        }) {
-                            Text(text = Constants.Keys.UPDATE)
-                        }
-
-                    Button(
-                        onClick = {
-                            viewModel.deleteNote(note = note){
-                                navController.navigate(NavRoute.Main.route)
-                            }
-                        }) {
-                            Text(text = Constants.Keys.DELETE)
-                        }
-                }
-                Button(
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                        .padding(horizontal = 32.dp)
-                        .fillMaxWidth(),
-                    onClick = {
-                        navController.navigate(NavRoute.Main.route)
-                    }) {
-                    Text(text = Constants.Keys.NAV_BACK)
-                }
             }
         }
     }
