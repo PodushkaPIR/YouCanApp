@@ -1,6 +1,7 @@
 package com.example.youcan.screens
 
 import android.app.Application
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +30,7 @@ import com.example.youcan.MainViewModelFactory
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
+import com.example.youcan.ui.theme.tapBarGround
 import com.example.youcan.utils.Constants
 import com.example.youcan.utils.DB_TYPE
 import com.example.youcan.utils.TYPE_FIREBASE
@@ -44,6 +46,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
     Scaffold(
         topBar = {
             TopAppBar(
+                backgroundColor = MaterialTheme.colors.tapBarGround,
                 content = {
                     Row(
                         modifier = Modifier
@@ -52,7 +55,9 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Text(
-                            text = "WayNote"
+                            text = "WayNote",
+                            fontSize =  16.sp,
+                            fontWeight = FontWeight.Bold
                         )
                         if (DB_TYPE.value.isNotEmpty()){
                             Icon(
@@ -91,7 +96,9 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
             }
         }
     ) {
-        LazyColumn{
+        LazyColumn(
+            modifier = Modifier.padding(vertical = 16.dp)
+        ){
             items(notes) { note ->
                 NoteItem(note = note, navController = navController, viewModel = viewModel)
             }
@@ -101,6 +108,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
 
 @Composable
 fun NoteItem (note: Note, navController: NavHostController, viewModel: MainViewModel){
+    val context = LocalContext.current
     val noteId = when(DB_TYPE.value) {
         TYPE_FIREBASE -> note.firebaseId
         TYPE_ROOM -> note.id
@@ -122,13 +130,16 @@ fun NoteItem (note: Note, navController: NavHostController, viewModel: MainViewM
                     .padding(vertical = 8.dp, horizontal = 16.dp)
             ) {
                 Text(
+                    modifier = Modifier.padding(end = 24.dp),
                     text = note.title,
                     fontSize =  24.sp,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
+
                 )
                 Text(
+                    modifier = Modifier.padding(end = 24.dp),
                     text = note.subtitle,
                     maxLines = 10,
                     overflow = TextOverflow.Ellipsis
@@ -138,6 +149,7 @@ fun NoteItem (note: Note, navController: NavHostController, viewModel: MainViewM
                 modifier = Modifier.align(Alignment.BottomEnd),
                 onClick = {
                     viewModel.deleteNote(note = note){}
+                    Toast.makeText(context, "Undo?", Toast.LENGTH_SHORT).show()
                 }
             ){
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "delete note")

@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,7 @@ import com.example.youcan.MainViewModelFactory
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
+import com.example.youcan.ui.theme.tapBarGround
 import com.example.youcan.utils.Constants
 import com.example.youcan.utils.DB_TYPE
 import com.example.youcan.utils.TYPE_FIREBASE
@@ -98,6 +100,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
             modifier = Modifier.fillMaxWidth(),
             topBar = {
                 TopAppBar(
+                    backgroundColor = MaterialTheme.colors.tapBarGround,
                     content = {
                         Row (
                             modifier = Modifier
@@ -145,14 +148,14 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                             text = note.title,
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(top = 32.dp)
+                            modifier = Modifier.padding(top = 32.dp, start = 16.dp, end = 16.dp)
 
                         )
                         Text(
                             text = note.subtitle,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Light,
-                            modifier = Modifier.padding(top = 16.dp)
+                            modifier = Modifier.padding(16.dp)
                         )
                     }
             }
