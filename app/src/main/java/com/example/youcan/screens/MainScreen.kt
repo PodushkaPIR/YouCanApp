@@ -86,7 +86,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
                 onClick = {
                     navController.navigate(NavRoute.Add.route)
                 },
-                backgroundColor = MaterialTheme.colors.primary
+                backgroundColor = MaterialTheme.colors.tapBarGround
             ) {
                 Icon(
                     imageVector = Icons.Filled.Add,
@@ -97,7 +97,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel){
         }
     ) {
         LazyColumn(
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier.padding(top = 16.dp)
         ){
             items(notes) { note ->
                 NoteItem(note = note, navController = navController, viewModel = viewModel)

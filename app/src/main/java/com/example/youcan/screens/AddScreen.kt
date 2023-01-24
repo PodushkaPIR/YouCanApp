@@ -1,16 +1,14 @@
 package com.example.youcan.screens
 
 import android.app.Application
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Scaffold
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -24,6 +22,7 @@ import com.example.youcan.MainViewModelFactory
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
+import com.example.youcan.ui.theme.tapBarGround
 import com.example.youcan.utils.Constants
 import androidx.compose.material.Text as Text
 
@@ -32,7 +31,33 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
     var title by remember { mutableStateOf("") }
     var subtitle by remember { mutableStateOf("") }
     var isButtonEnabled by remember { mutableStateOf(false) }
-    Scaffold {
+    Scaffold (
+        topBar = {
+            TopAppBar(
+                backgroundColor = MaterialTheme.colors.tapBarGround,
+                content = {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        IconButton(
+                            onClick = {
+                                navController.navigate(NavRoute.Main.route)
+                            }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.ArrowBack,
+                                contentDescription = "nav_back"
+                            )
+                        }
+                    }
+                },
+                contentColor = Color.White,
+                elevation = 12.dp
+            )}
+    ){
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
