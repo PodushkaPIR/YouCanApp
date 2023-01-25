@@ -30,6 +30,12 @@ import androidx.compose.material.Text as Text
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
     var title by remember { mutableStateOf("") }
     var subtitle by remember { mutableStateOf("") }
+
+    //Random number
+    val proteins = (0..10).random()
+    val fats = (0..10).random()
+    val carbs = (0..10).random()
+
     var isButtonEnabled by remember { mutableStateOf(false) }
     Scaffold (
         topBar = {
@@ -74,7 +80,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                 value = title,
                 onValueChange = {
                     title = it
-                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
+                    isButtonEnabled = title.isNotEmpty()
                 },
                 label = { Text(text = Constants.Keys.NOTE_TITLE) },
                 isError = title.isEmpty()
@@ -83,7 +89,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                 value = subtitle,
                 onValueChange = {
                     subtitle = it
-                    isButtonEnabled = title.isNotEmpty() && subtitle.isNotEmpty()
+                    isButtonEnabled = title.isNotEmpty()
                     },
                 label = { Text(text = Constants.Keys.NOTE_SUBTITLE) },
                 isError = subtitle.isEmpty()
@@ -93,7 +99,9 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                 modifier = Modifier.padding(top = 16.dp),
                 enabled = isButtonEnabled,
                 onClick = {
-                    viewModel.addNote(note = Note(title = title, subtitle = subtitle)) {
+                    viewModel.addNote(note = Note(
+                        title = title, proteins = proteins, fats = fats, carbs = carbs, subtitle = subtitle)
+                    ) {
                         navController.navigate(NavRoute.Main.route)
                     }
                 }
