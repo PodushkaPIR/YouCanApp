@@ -2,6 +2,7 @@ package com.example.youcan.screens
 
 import android.app.Application
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -15,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -97,7 +99,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
         }
     ) {
         Scaffold(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             topBar = {
                 TopAppBar(
                     backgroundColor = MaterialTheme.colors.tapBarGround,
@@ -135,33 +137,78 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                     elevation = 12.dp
                 )
             }) {
-                Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(32.dp)
-                ) {
-                    Column(
-                        modifier = Modifier.padding(vertical = 8.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
+                Column {
+                    Box{
                         Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.TopCenter)
+                                .padding(16.dp),
                             text = note.title,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(top = 32.dp, start = 16.dp, end = 16.dp)
-
-                        )
-                        Text(
-                            text = note.subtitle,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Light,
-                            modifier = Modifier.padding(16.dp)
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.Bold
                         )
                     }
-            }
+                    NoteInfo(viewModel = viewModel, noteId = noteId)
+                }
         }
     }
 }
+
+@Composable
+fun NoteInfo(viewModel: MainViewModel, noteId: String?){
+    val notes = viewModel.readAllNotes().observeAsState(listOf()).value
+    val note = when(DB_TYPE.value){
+        TYPE_FIREBASE -> {
+            notes.firstOrNull{ it.firebaseId == noteId } ?: Note()
+        }
+        TYPE_ROOM ->{
+            notes.firstOrNull{ it.id == noteId?.toInt() } ?: Note()
+        }
+        else -> Note()
+    }
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        ) {
+            Column {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    text = "Info",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.Gray,
+                    textAlign = TextAlign.Start
+                )
+                Column(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+
+                }
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp),
+                    text = "Comment",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 20.sp,
+                    color = Color.Gray,
+                    textAlign = TextAlign.Start
+                )
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = note.subtitle,
+                    fontWeight = FontWeight.Light,
+                    fontSize = 18.sp
+                )
+        }
+    }
+}
+
 
 @Preview(showBackground = true)
 @Composable
