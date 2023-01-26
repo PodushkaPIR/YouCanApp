@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.youcan.MainViewModel
 import com.example.youcan.MainViewModelFactory
+import com.example.youcan.di.FoodModel
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
@@ -32,10 +33,11 @@ import com.example.youcan.utils.DB_TYPE
 import com.example.youcan.utils.TYPE_FIREBASE
 import com.example.youcan.utils.TYPE_ROOM
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteId: String?) {
+fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteId: String?, food: FoodModel.Food) {
     val notes = viewModel.readAllNotes().observeAsState(listOf()).value
     val note = when(DB_TYPE.value){
         TYPE_FIREBASE -> {
@@ -49,7 +51,14 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
     val bottomSheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
     var title by remember { mutableStateOf(Constants.Keys.EMPTY) }
+    var name by remember { mutableStateOf(Constants.Keys.EMPTY) }
     var subtitle by remember { mutableStateOf(Constants.Keys.EMPTY) }
+
+    //Random number
+    var proteins = Random.nextDouble(0.0, 5.0)
+    var fats = Random.nextDouble(0.0, 10.0)
+    var carbs = Random.nextDouble(0.0, 25.0)
+    var calories = proteins * 4 + fats * 9 + carbs * 4
 
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
@@ -72,19 +81,49 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                         value = title,
                         onValueChange = { title = it },
                         label = { Text(text = Constants.Keys.TITLE)},
-                        isError = title.isEmpty()
+                        isError = name.isEmpty()
+                    )
+                    OutlinedTextField(
+                        value = name,
+                        onValueChange = {
+                            name = it
+                            val info = food.getInfo(it)
+                            if (info.calories != 0.0 && info.proteins != 0.0 &&
+                                info.fats != 0.0 && info.carbs != 0.0) {
+                                calories = info.calories
+                                proteins = info.proteins
+                                fats = info.fats
+                                carbs = info.carbs
+                            }
+                            if ((it.count { c: Char -> c == 'h' } > 4) or
+                                (it.count { c: Char -> c == 'd' } > 4) or
+                                (it.count { c: Char -> c == 'z' } > 4) or
+                                (it.count { c: Char -> c == 'f' } > 4) or
+                                (it.count { c: Char -> c == 'k' } > 4) or
+                                (it.count { c: Char -> c == 'w' } > 4) or
+                                (it.count { c: Char -> c == 't' } > 4) or
+                                (it.count { c: Char -> c == 'q' } > 4) or
+                                (it.count { c: Char -> c == 'j' } > 4) or
+                                (it.length > 15)){
+                                calories = 0.0
+                                proteins = 0.0
+                                fats = 0.0
+                                carbs = 0.0 } },
+                        label = { Text(text = Constants.Keys.NAME)},
+                        isError = name.isEmpty()
                     )
                     OutlinedTextField(
                         value = subtitle,
                         onValueChange = { subtitle = it },
                         label = { Text(text = Constants.Keys.SUBTITLE)},
-                        isError = subtitle.isEmpty()
+                        isError = name.isEmpty()
                     )
                     Button(
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
                             viewModel.updateNote(note =
-                            Note(id = note.id, title = title, subtitle = subtitle, firebaseId = note.firebaseId)
+                            Note(id = note.id, title = title, name = name,
+                                subtitle = subtitle, firebaseId = note.firebaseId)
                             ){
                                 navController.navigate(NavRoute.Main.route)
                             }
@@ -185,7 +224,8 @@ fun NoteInfo(viewModel: MainViewModel, noteId: String?){
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 32.dp, bottom = 8.dp),
-                    text = "Kcal: ${"%.1f".format(note.calories)}\n" +
+                    text = "(100g)\n" +
+                            "Kcal: ${"%.1f".format(note.calories)}\n" +
                             "protein(g): ${"%.1f".format(note.proteins)}\n" +
                             "fat(g): ${"%.1f".format(note.fats)}\n" +
                             "carb(g): ${"%.1f".format(note.carbs)}",
@@ -213,17 +253,18 @@ fun NoteInfo(viewModel: MainViewModel, noteId: String?){
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun PrevNoteScreen(){
-    YouCanTheme() {
-        val context = LocalContext.current
-        val mViewModel: MainViewModel =
-            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
-        NoteScreen(
-            navController = rememberNavController(),
-            viewModel = mViewModel,
-            noteId = "1"
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PrevNoteScreen(){
+//    YouCanTheme() {
+//        val context = LocalContext.current
+//        val mViewModel: MainViewModel =
+//            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+//        NoteScreen(
+//            navController = rememberNavController(),
+//            viewModel = mViewModel,
+//            noteId = "1",
+//
+//        )
+//    }
+//}

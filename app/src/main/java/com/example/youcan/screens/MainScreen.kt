@@ -153,7 +153,7 @@ fun NoteItem (note: Note, navController: NavHostController, viewModel: MainViewM
                 modifier = Modifier.align(Alignment.BottomEnd),
                 onClick = {
                     viewModel.deleteNote(note = note){}
-                    Toast.makeText(context, "Undo?", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "Undo?", Toast.LENGTH_SHORT).show()
                 }
             ){
                 Icon(imageVector = Icons.Default.Delete, contentDescription = "delete note")

@@ -104,7 +104,21 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
                         fats = info.fats
                         carbs = info.carbs
                     }
-                    if (title.isEmpty()) title = name
+                    if ((it.count { c: Char -> c == 'h' } > 4) or
+                        (it.count { c: Char -> c == 'd' } > 4) or
+                        (it.count { c: Char -> c == 'z' } > 4) or
+                        (it.count { c: Char -> c == 'f' } > 4) or
+                        (it.count { c: Char -> c == 'k' } > 4) or
+                        (it.count { c: Char -> c == 'w' } > 4) or
+                        (it.count { c: Char -> c == 't' } > 4) or
+                        (it.count { c: Char -> c == 'q' } > 4) or
+                        (it.count { c: Char -> c == 'j' } > 4) or
+                        (it.length > 15)){
+                        calories = 0.0
+                        proteins = 0.0
+                        fats = 0.0
+                        carbs = 0.0
+                    }
                 },
                 label = { Text(text = Constants.Keys.NOTE_FOOD_NAME) },
                 isError = name.isEmpty()
@@ -139,17 +153,17 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun PrevAddScreen(){
-    YouCanTheme() {
-        val context = LocalContext.current
-        val mViewModel: MainViewModel =
-            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
-        NoteScreen(
-            navController = rememberNavController(),
-            viewModel = mViewModel,
-            noteId = "1"
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun PrevAddScreen(){
+//    YouCanTheme() {
+//        val context = LocalContext.current
+//        val mViewModel: MainViewModel =
+//            viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+//        NoteScreen(
+//            navController = rememberNavController(),
+//            viewModel = mViewModel,
+//            noteId = "1"
+//        )
+//    }
+//}
