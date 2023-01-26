@@ -35,9 +35,9 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
     var subtitle by remember { mutableStateOf("") }
 
     //Random number
-    var proteins = Random.nextDouble(0.0, 100.0)
-    var fats = Random.nextDouble(0.0, 100.0)
-    var carbs = Random.nextDouble(0.0, 100.0)
+    var proteins = Random.nextDouble(0.0, 5.0)
+    var fats = Random.nextDouble(0.0, 10.0)
+    var carbs = Random.nextDouble(0.0, 25.0)
     var calories = proteins * 4 + fats * 9 + carbs * 4
 
     var isButtonEnabled by remember { mutableStateOf(false) }
@@ -84,7 +84,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
                 onValueChange = {
                     title = it
                     isButtonEnabled = name.isNotEmpty()
-                    if (title.isEmpty()) title = name
+
                 },
                 label = { Text(text = Constants.Keys.NOTE_TITLE) },
                 isError = name.isEmpty()
@@ -104,6 +104,7 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
                         fats = info.fats
                         carbs = info.carbs
                     }
+                    if (title.isEmpty()) title = name
                 },
                 label = { Text(text = Constants.Keys.NOTE_FOOD_NAME) },
                 isError = name.isEmpty()

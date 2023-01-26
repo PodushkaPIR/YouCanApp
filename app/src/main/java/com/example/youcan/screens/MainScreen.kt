@@ -140,7 +140,8 @@ fun NoteItem (note: Note, navController: NavHostController, viewModel: MainViewM
                 )
                 Text(
                     modifier = Modifier.padding(end = 24.dp),
-                    text = "Kcal: ${"%.1f".format(note.calories)}\n" +
+                    text = "(100g)\n" +
+                            "Kcal: ${"%.1f".format(note.calories)}\n" +
                             "protein(g): ${"%.1f".format(note.proteins)}\n" +
                             "fat(g): ${"%.1f".format(note.fats)}\n" +
                             "carb(g): ${"%.1f".format(note.carbs)}",
