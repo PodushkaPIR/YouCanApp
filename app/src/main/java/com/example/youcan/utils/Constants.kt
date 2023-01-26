@@ -40,7 +40,6 @@ object Constants {
         const val SIGN_IN = "Sign in"
     }
     object Screens {
-        const val SPLASH_SCREEN = "splash_screen"
         const val START_SCREEN = "start_screen"
         const val MAIN_SCREEN = "main_screen"
         const val ADD_SCREEN = "add_screen"

@@ -19,7 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.youcan.MainViewModel
 import com.example.youcan.MainViewModelFactory
-import com.example.youcan.di.Food
+import com.example.youcan.di.FoodModel
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
@@ -28,7 +28,7 @@ import com.example.youcan.utils.Constants
 import androidx.compose.material.Text as Text
 
 @Composable
-fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: Food) {
+fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: FoodModel.Food) {
     var title by remember { mutableStateOf("") }
     var subtitle by remember { mutableStateOf("") }
 
