@@ -140,7 +140,10 @@ fun NoteItem (note: Note, navController: NavHostController, viewModel: MainViewM
                 )
                 Text(
                     modifier = Modifier.padding(end = 24.dp),
-                    text = note.subtitle,
+                    text = "calories: ${note.calories}\n" +
+                            "protein(g): ${note.proteins}\n" +
+                            "fat(g): ${note.fats}\n" +
+                            "carb(g): ${note.carbs}",
                     maxLines = 10,
                     overflow = TextOverflow.Ellipsis
                 )

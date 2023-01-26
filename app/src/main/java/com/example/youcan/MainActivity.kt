@@ -20,6 +20,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.example.youcan.di.Food
 import com.example.youcan.navigation.AppNavHost
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             YouCanTheme {
+                val mfood = Food
                 val context = LocalContext.current
                 val mViewModel: MainViewModel =
                     viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
@@ -54,7 +56,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colors.background
                         ) {
-                            AppNavHost(mViewModel, navController)
+                            AppNavHost(mViewModel, navController, mfood)
                         }
                     }
                 )

@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.youcan.MainViewModel
 import com.example.youcan.MainViewModelFactory
+import com.example.youcan.di.Food
 import com.example.youcan.model.Note
 import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
@@ -27,14 +28,21 @@ import com.example.youcan.utils.Constants
 import androidx.compose.material.Text as Text
 
 @Composable
-fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
+fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: Food) {
     var title by remember { mutableStateOf("") }
     var subtitle by remember { mutableStateOf("") }
 
     //Random number
-    val proteins = (0..10).random()
-    val fats = (0..10).random()
-    val carbs = (0..10).random()
+//    var proteins = (0..50).random()
+//    var fats = (0..50).random()
+//    var carbs = (0..50).random()
+//    var calories = proteins * 4 + fats * 9 + carbs * 4
+
+    var proteins = 0.0
+    var fats = 0.0
+    var carbs = 0.0
+    var calories = 0.0
+
 
     var isButtonEnabled by remember { mutableStateOf(false) }
     Scaffold (
@@ -81,6 +89,12 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                 onValueChange = {
                     title = it
                     isButtonEnabled = title.isNotEmpty()
+
+                    val info = food.getInfo(it)
+                    calories = info.calories
+                    proteins = info.proteins
+                    fats = info.fats
+                    carbs = info.carbs
                 },
                 label = { Text(text = Constants.Keys.NOTE_TITLE) },
                 isError = title.isEmpty()
@@ -100,7 +114,9 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel) {
                 enabled = isButtonEnabled,
                 onClick = {
                     viewModel.addNote(note = Note(
-                        title = title, proteins = proteins, fats = fats, carbs = carbs, subtitle = subtitle)
+                        title = title, calories = calories,
+                        proteins = proteins, fats = fats,
+                        carbs = carbs, subtitle = subtitle)
                     ) {
                         navController.navigate(NavRoute.Main.route)
                     }

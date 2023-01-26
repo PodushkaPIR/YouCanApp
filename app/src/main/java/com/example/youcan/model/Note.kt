@@ -12,11 +12,13 @@ data class Note(
     @ColumnInfo
     val title: String = "",
     @ColumnInfo
-    val proteins: Int = 0,
+    val calories: Double = 0.0,
     @ColumnInfo
-    val fats: Int = 0,
+    val proteins: Double = 0.0,
     @ColumnInfo
-    val carbs: Int = 0,
+    val fats: Double = 0.0,
+    @ColumnInfo
+    val carbs: Double = 0.0,
     @ColumnInfo
     val subtitle: String = "",
     val firebaseId: String = ""

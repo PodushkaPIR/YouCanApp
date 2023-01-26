@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.youcan.MainViewModel
+import com.example.youcan.di.Food
 import com.example.youcan.screens.*
 import com.example.youcan.utils.Constants
 
@@ -19,7 +20,7 @@ sealed class NavRoute(val route: String){
 }
 
 @Composable
-fun AppNavHost(mViewModel: MainViewModel, navController: NavHostController){
+fun AppNavHost(mViewModel: MainViewModel, navController: NavHostController, food: Food){
 
     NavHost(navController = navController, startDestination = NavRoute.Start.route){
 //        composable(NavRoute.Splash.route){
@@ -32,7 +33,7 @@ fun AppNavHost(mViewModel: MainViewModel, navController: NavHostController){
             MainScreen(navController = navController, viewModel = mViewModel)
         }
         composable(NavRoute.Add.route){
-            AddScreen(navController = navController, viewModel = mViewModel)
+            AddScreen(navController = navController, viewModel = mViewModel, food = food)
         }
         composable(NavRoute.Note.route + "/{${Constants.Keys.ID}}"){ backStackEntry ->
             NoteScreen(navController = navController, viewModel = mViewModel, noteId = backStackEntry.arguments?.getString(Constants.Keys.ID))
