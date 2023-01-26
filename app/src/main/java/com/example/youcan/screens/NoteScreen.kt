@@ -2,7 +2,6 @@ package com.example.youcan.screens
 
 import android.app.Application
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -14,7 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -176,23 +174,28 @@ fun NoteInfo(viewModel: MainViewModel, noteId: String?){
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(top = 16.dp, start = 16.dp),
                     text = "Info",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     color = Color.Gray,
                     textAlign = TextAlign.Start
                 )
-                Column(
-                    modifier = Modifier.padding(vertical = 8.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-
-                }
                 Text(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 16.dp, end = 16.dp),
+                        .padding(start = 32.dp, bottom = 8.dp),
+                    text = "Kcal: ${"%.1f".format(note.calories)}\n" +
+                            "protein(g): ${"%.1f".format(note.proteins)}\n" +
+                            "fat(g): ${"%.1f".format(note.fats)}\n" +
+                            "carb(g): ${"%.1f".format(note.carbs)}",
+                    fontWeight = FontWeight.Light,
+                    fontSize = 18.sp
+                )
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp),
                     text = "Comment",
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
@@ -200,7 +203,7 @@ fun NoteInfo(viewModel: MainViewModel, noteId: String?){
                     textAlign = TextAlign.Start
                 )
                 Text(
-                    modifier = Modifier.padding(16.dp),
+                    modifier = Modifier.padding(start = 32.dp, bottom = 8.dp),
                     text = note.subtitle,
                     fontWeight = FontWeight.Light,
                     fontSize = 18.sp

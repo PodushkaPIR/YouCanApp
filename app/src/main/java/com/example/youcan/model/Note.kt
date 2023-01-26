@@ -10,7 +10,10 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo
+    val name: String = "",
+    @ColumnInfo
     val title: String = "",
+
     @ColumnInfo
     val calories: Double = 0.0,
     @ColumnInfo
@@ -19,7 +22,9 @@ data class Note(
     val fats: Double = 0.0,
     @ColumnInfo
     val carbs: Double = 0.0,
+
     @ColumnInfo
     val subtitle: String = "",
+
     val firebaseId: String = ""
 )

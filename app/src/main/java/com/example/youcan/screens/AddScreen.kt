@@ -25,24 +25,20 @@ import com.example.youcan.navigation.NavRoute
 import com.example.youcan.ui.theme.YouCanTheme
 import com.example.youcan.ui.theme.tapBarGround
 import com.example.youcan.utils.Constants
+import kotlin.random.Random
 import androidx.compose.material.Text as Text
 
 @Composable
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: FoodModel.Food) {
     var title by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
     var subtitle by remember { mutableStateOf("") }
 
     //Random number
-//    var proteins = (0..50).random()
-//    var fats = (0..50).random()
-//    var carbs = (0..50).random()
-//    var calories = proteins * 4 + fats * 9 + carbs * 4
-
-    var proteins = 0.0
-    var fats = 0.0
-    var carbs = 0.0
-    var calories = 0.0
-
+    var proteins = Random.nextDouble(0.0, 100.0)
+    var fats = Random.nextDouble(0.0, 100.0)
+    var carbs = Random.nextDouble(0.0, 100.0)
+    var calories = proteins * 4 + fats * 9 + carbs * 4
 
     var isButtonEnabled by remember { mutableStateOf(false) }
     Scaffold (
@@ -83,38 +79,52 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(vertical = 8.dp)
             )
-            
             OutlinedTextField(
                 value = title,
                 onValueChange = {
                     title = it
-                    isButtonEnabled = title.isNotEmpty()
-
-                    val info = food.getInfo(it)
-                    calories = info.calories
-                    proteins = info.proteins
-                    fats = info.fats
-                    carbs = info.carbs
+                    isButtonEnabled = name.isNotEmpty()
+                    if (title.isEmpty()) title = name
                 },
                 label = { Text(text = Constants.Keys.NOTE_TITLE) },
-                isError = title.isEmpty()
+                isError = name.isEmpty()
+
             )
+            OutlinedTextField(
+                value = name,
+                onValueChange = {
+                    name = it
+                    isButtonEnabled = name.isNotEmpty()
+
+                    val info = food.getInfo(it)
+                    if (info.calories != 0.0 && info.proteins != 0.0 &&
+                        info.fats != 0.0 && info.carbs != 0.0) {
+                        calories = info.calories
+                        proteins = info.proteins
+                        fats = info.fats
+                        carbs = info.carbs
+                    }
+                },
+                label = { Text(text = Constants.Keys.NOTE_FOOD_NAME) },
+                isError = name.isEmpty()
+            )
+
             OutlinedTextField(
                 value = subtitle,
                 onValueChange = {
                     subtitle = it
                     isButtonEnabled = title.isNotEmpty()
                     },
-                label = { Text(text = Constants.Keys.NOTE_SUBTITLE) },
-                isError = subtitle.isEmpty()
+                label = { Text(text = Constants.Keys.NOTE_COMMENT) },
+                isError = name.isEmpty()
             )
 
             Button(
                 modifier = Modifier.padding(top = 16.dp),
                 enabled = isButtonEnabled,
                 onClick = {
-                    viewModel.addNote(note = Note(
-                        title = title, calories = calories,
+                    viewModel.addNote(note = Note(name = name, title = title,
+                        calories = calories,
                         proteins = proteins, fats = fats,
                         carbs = carbs, subtitle = subtitle)
                     ) {
