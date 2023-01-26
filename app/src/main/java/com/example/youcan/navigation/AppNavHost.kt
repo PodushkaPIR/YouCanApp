@@ -21,9 +21,7 @@ sealed class NavRoute(val route: String){
 fun AppNavHost(mViewModel: MainViewModel, navController: NavHostController, food: FoodModel.Food){
 
     NavHost(navController = navController, startDestination = NavRoute.Start.route){
-//        composable(NavRoute.Splash.route){
-//            SplashScreen(navController = navController)
-//        }
+
         composable(NavRoute.Start.route){
             StartScreen(navController = navController, viewModel = mViewModel)
         }
