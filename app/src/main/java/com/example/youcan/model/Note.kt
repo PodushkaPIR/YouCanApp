@@ -10,9 +10,9 @@ data class Note(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo
-    val name: String = "",
-    @ColumnInfo
     val title: String = "",
+    @ColumnInfo
+    val name: String = "",
 
     @ColumnInfo
     val calories: Double = 0.0,

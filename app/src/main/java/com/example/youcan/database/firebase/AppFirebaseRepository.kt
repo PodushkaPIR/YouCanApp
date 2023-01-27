@@ -41,7 +41,7 @@ class AppFirebaseRepository : DatabaseRepository {
 
         mapNotes[FIREBASE_ID] = noteId
         mapNotes[Constants.Keys.TITLE] = note.title
-        mapNotes[Constants.Keys.NAME] = note.title
+        mapNotes[Constants.Keys.NAME] = note.name
         mapNotes[Constants.Keys.SUBTITLE] = note.subtitle
 
         database.child(noteId)

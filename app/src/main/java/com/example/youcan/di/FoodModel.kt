@@ -64,7 +64,7 @@ class FoodModel{
             FoodInfo("orange juice", 46.4, 0.7, 0.2, 11.4),
             FoodInfo("onion", 44.7, 1.4, 0.2, 10.1),
             FoodInfo("melon", 33.6, 0.8,  0.2, 8.3),
-            FoodInfo("water melon", 29.6, 0.6, 0.2, 7.7),
+            FoodInfo("watermelon", 29.6, 0.6, 0.2, 7.7),
             FoodInfo("kiwi", 59.5, 1.1, 0.5, 14.9),
             FoodInfo("pear", 56.7, 0.4, 0.1, 14.9),
             FoodInfo("peach", 39.9, 0.9, 0.3, 9.7),

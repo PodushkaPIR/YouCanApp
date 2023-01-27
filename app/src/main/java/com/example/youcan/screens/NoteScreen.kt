@@ -60,6 +60,8 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
     var carbs = Random.nextDouble(0.0, 25.0)
     var calories = proteins * 4 + fats * 9 + carbs * 4
 
+    val alphabet = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+
     ModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetElevation = 5.dp,
@@ -95,16 +97,17 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                                 fats = info.fats
                                 carbs = info.carbs
                             }
-                            if ((it.count { c: Char -> c == 'h' } > 4) or
-                                (it.count { c: Char -> c == 'd' } > 4) or
-                                (it.count { c: Char -> c == 'z' } > 4) or
-                                (it.count { c: Char -> c == 'f' } > 4) or
-                                (it.count { c: Char -> c == 'k' } > 4) or
-                                (it.count { c: Char -> c == 'w' } > 4) or
-                                (it.count { c: Char -> c == 't' } > 4) or
-                                (it.count { c: Char -> c == 'q' } > 4) or
-                                (it.count { c: Char -> c == 'j' } > 4) or
-                                (it.length > 15)){
+                            if ((it.count { c: Char -> c == 'h' } > 2) or
+                                (it.count { c: Char -> c == 'd' } > 3) or
+                                (it.count { c: Char -> c == 'z' } > 2) or
+                                (it.count { c: Char -> c == 'f' } > 3) or
+                                (it.count { c: Char -> c == 'k' } > 3) or
+                                (it.count { c: Char -> c == 'w' } > 2) or
+                                (it.count { c: Char -> c == 't' } > 3) or
+                                (it.count { c: Char -> c == 'q' } > 2) or
+                                (it.count { c: Char -> c == 'j' } > 2) or
+                                (it.length > 14) or
+                                (it.any { c: Char -> c.lowercaseChar() in alphabet })){
                                 calories = 0.0
                                 proteins = 0.0
                                 fats = 0.0
@@ -123,7 +126,9 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                         onClick = {
                             viewModel.updateNote(note =
                             Note(id = note.id, title = title, name = name,
-                                subtitle = subtitle, firebaseId = note.firebaseId)
+                                calories = calories,
+                                proteins = proteins, fats = fats,
+                                carbs = carbs, subtitle = subtitle, firebaseId = note.firebaseId)
                             ){
                                 navController.navigate(NavRoute.Main.route)
                             }
