@@ -30,7 +30,6 @@ class FoodModel{
             FoodInfo("eggs", 145.8, 12.7, 9.7, 0.7),
             FoodInfo("salt", 0.0, 0.0, 0.0, 0.0),
             FoodInfo("sugar", 385.6, 0.0, 0.0, 99.8),
-            FoodInfo("water", 0.0, 0.0, 0.0, 0.0),
             FoodInfo("ketchup", 100.7, 1.1, 0.1, 27.6),
             FoodInfo("pelmeni", 208.7, 10.5, 5.0, 29.4),
             FoodInfo("pizza", 262.9, 11.4, 9.8, 32.9),
@@ -85,7 +84,7 @@ class FoodModel{
         )
 
         fun getInfo(name_title: String): FoodInfo{
-            val info = FoodInfo("", 0.0, 0.0, 0.0, 0.0)
+            val info = FoodInfo("", 0.01, 0.01, 0.01, 0.01)
             for (i in foodList.indices){
                 if (foodList[i].name == name_title){
                     info.name = foodList[i].name

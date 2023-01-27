@@ -27,7 +27,11 @@ class AppFirebaseRepository : DatabaseRepository {
         mapNotes[FIREBASE_ID] = noteId
         mapNotes[Constants.Keys.TITLE] = note.title
         mapNotes[Constants.Keys.NAME] = note.name
-        mapNotes[Constants.Keys.SUBTITLE] = note.subtitle
+        mapNotes[Constants.Keys.CALORIES] = note.calories
+        mapNotes[Constants.Keys.PROTEINS] = note.proteins
+        mapNotes[Constants.Keys.FATS] = note.fats
+        mapNotes[Constants.Keys.CARBS] = note.carbs
+        mapNotes[Constants.Keys.COMMENT] = note.comment
 
         database.child(noteId)
             .updateChildren(mapNotes)
@@ -42,7 +46,11 @@ class AppFirebaseRepository : DatabaseRepository {
         mapNotes[FIREBASE_ID] = noteId
         mapNotes[Constants.Keys.TITLE] = note.title
         mapNotes[Constants.Keys.NAME] = note.name
-        mapNotes[Constants.Keys.SUBTITLE] = note.subtitle
+        mapNotes[Constants.Keys.CALORIES] = note.calories
+        mapNotes[Constants.Keys.PROTEINS] = note.proteins
+        mapNotes[Constants.Keys.FATS] = note.fats
+        mapNotes[Constants.Keys.CARBS] = note.carbs
+        mapNotes[Constants.Keys.COMMENT] = note.comment
 
         database.child(noteId)
             .updateChildren(mapNotes)

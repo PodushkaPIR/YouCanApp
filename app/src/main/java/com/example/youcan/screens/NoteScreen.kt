@@ -52,7 +52,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
     val coroutineScope = rememberCoroutineScope()
     var title by remember { mutableStateOf(Constants.Keys.EMPTY) }
     var name by remember { mutableStateOf(Constants.Keys.EMPTY) }
-    var subtitle by remember { mutableStateOf(Constants.Keys.EMPTY) }
+    var comment by remember { mutableStateOf(Constants.Keys.EMPTY) }
 
     //Random number
     var proteins = Random.nextDouble(0.0, 5.0)
@@ -90,14 +90,8 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                         onValueChange = {
                             name = it
                             val info = food.getInfo(it)
-                            if (info.calories != 0.0 && info.proteins != 0.0 &&
-                                info.fats != 0.0 && info.carbs != 0.0) {
-                                calories = info.calories
-                                proteins = info.proteins
-                                fats = info.fats
-                                carbs = info.carbs
-                            }
-                            if ((it.count { c: Char -> c == 'h' } > 2) or
+                            if ((it == "water") or
+                                (it.count { c: Char -> c == 'h' } > 2) or
                                 (it.count { c: Char -> c == 'd' } > 3) or
                                 (it.count { c: Char -> c == 'z' } > 2) or
                                 (it.count { c: Char -> c == 'f' } > 3) or
@@ -107,30 +101,51 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                                 (it.count { c: Char -> c == 'q' } > 2) or
                                 (it.count { c: Char -> c == 'j' } > 2) or
                                 (it.length > 14) or
-                                (it.any { c: Char -> c.lowercaseChar() in alphabet })){
+                                (it.any { c: Char -> c.lowercaseChar() in alphabet })) {
                                 calories = 0.0
                                 proteins = 0.0
                                 fats = 0.0
-                                carbs = 0.0 } },
+                                carbs = 0.0
+                            }
+                            else if (info.calories != 0.01 && info.proteins != 0.01 &&
+                                info.fats != 0.01 && info.carbs != 0.01){
+                                calories = info.calories
+                                proteins = info.proteins
+                                fats = info.fats
+                                carbs = info.carbs
+                            }
+                        },
                         label = { Text(text = Constants.Keys.NAME)},
                         isError = name.isEmpty()
                     )
                     OutlinedTextField(
-                        value = subtitle,
-                        onValueChange = { subtitle = it },
-                        label = { Text(text = Constants.Keys.SUBTITLE)},
+                        value = comment,
+                        onValueChange = { comment = it },
+                        label = { Text(text = Constants.Keys.COMMENT)},
                         isError = name.isEmpty()
                     )
                     Button(
                         modifier = Modifier.padding(top = 16.dp),
                         onClick = {
-                            viewModel.updateNote(note =
-                            Note(id = note.id, title = title, name = name,
-                                calories = calories,
-                                proteins = proteins, fats = fats,
-                                carbs = carbs, subtitle = subtitle, firebaseId = note.firebaseId)
-                            ){
-                                navController.navigate(NavRoute.Main.route)
+                            if (title.isNotEmpty()){
+                                viewModel.updateNote(note =
+                                Note(id = note.id, title = title, name = name,
+                                    calories = calories,
+                                    proteins = proteins, fats = fats,
+                                    carbs = carbs, comment = comment, firebaseId = note.firebaseId)
+                                ){
+                                    navController.navigate(NavRoute.Main.route)
+                                }
+                            }
+                            else {
+                                viewModel.updateNote(note =
+                                Note(id = note.id, title = name, name = name,
+                                    calories = calories,
+                                    proteins = proteins, fats = fats,
+                                    carbs = carbs, comment = comment, firebaseId = note.firebaseId)
+                                ){
+                                    navController.navigate(NavRoute.Main.route)
+                                }
                             }
                         }
                     ) {
@@ -166,7 +181,7 @@ fun NoteScreen(navController: NavHostController, viewModel: MainViewModel, noteI
                                 onClick = {
                                     coroutineScope.launch {
                                     title = note.title
-                                    subtitle = note.subtitle
+                                    comment = note.comment
                                     bottomSheetState.show()
                                     }
                                 }
@@ -211,7 +226,7 @@ fun NoteInfo(viewModel: MainViewModel, noteId: String?){
     }
         Card(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(16.dp)
         ) {
             Column {
@@ -249,7 +264,7 @@ fun NoteInfo(viewModel: MainViewModel, noteId: String?){
                 )
                 Text(
                     modifier = Modifier.padding(start = 32.dp, bottom = 8.dp),
-                    text = note.subtitle,
+                    text = note.comment,
                     fontWeight = FontWeight.Light,
                     fontSize = 18.sp
                 )

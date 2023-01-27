@@ -24,7 +24,7 @@ data class Note(
     val carbs: Double = 0.0,
 
     @ColumnInfo
-    val subtitle: String = "",
+    val comment: String = "",
 
     val firebaseId: String = ""
 )

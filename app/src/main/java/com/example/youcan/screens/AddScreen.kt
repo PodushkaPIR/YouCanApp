@@ -25,7 +25,7 @@ import androidx.compose.material.Text as Text
 fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: FoodModel.Food) {
     var title by remember { mutableStateOf("") }
     var name by remember { mutableStateOf("") }
-    var subtitle by remember { mutableStateOf("") }
+    var comment by remember { mutableStateOf("") }
 
     //Random number
     var proteins = Random.nextDouble(0.0, 5.0)
@@ -93,14 +93,8 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
                     isButtonEnabled = name.isNotEmpty()
 
                     val info = food.getInfo(it)
-                    if (info.calories != 0.0 && info.proteins != 0.0 &&
-                        info.fats != 0.0 && info.carbs != 0.0) {
-                        calories = info.calories
-                        proteins = info.proteins
-                        fats = info.fats
-                        carbs = info.carbs
-                    }
-                    if ((it.count { c: Char -> c == 'h' } > 2) or
+                    if ((it == "water") or
+                        (it.count { c: Char -> c == 'h' } > 2) or
                         (it.count { c: Char -> c == 'd' } > 3) or
                         (it.count { c: Char -> c == 'z' } > 2) or
                         (it.count { c: Char -> c == 'f' } > 3) or
@@ -116,15 +110,22 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
                         fats = 0.0
                         carbs = 0.0
                     }
+                    else if (info.calories != 0.01 && info.proteins != 0.01 &&
+                        info.fats != 0.01 && info.carbs != 0.01){
+                        calories = info.calories
+                        proteins = info.proteins
+                        fats = info.fats
+                        carbs = info.carbs
+                    }
                 },
                 label = { Text(text = Constants.Keys.NOTE_FOOD_NAME) },
                 isError = name.isEmpty()
             )
 
             OutlinedTextField(
-                value = subtitle,
+                value = comment,
                 onValueChange = {
-                    subtitle = it
+                    comment = it
                     isButtonEnabled = title.isNotEmpty()
                     },
                 label = { Text(text = Constants.Keys.NOTE_COMMENT) },
@@ -135,12 +136,23 @@ fun AddScreen(navController: NavHostController, viewModel: MainViewModel, food: 
                 modifier = Modifier.padding(top = 16.dp),
                 enabled = isButtonEnabled,
                 onClick = {
-                    viewModel.addNote(note = Note(title = title, name = name,
-                        calories = calories,
-                        proteins = proteins, fats = fats,
-                        carbs = carbs, subtitle = subtitle)
-                    ) {
-                        navController.navigate(NavRoute.Main.route)
+                    if (title.isNotEmpty()){
+                        viewModel.addNote(note = Note(title = title, name = name,
+                            calories = calories,
+                            proteins = proteins, fats = fats,
+                            carbs = carbs, comment = comment)
+                        ) {
+                            navController.navigate(NavRoute.Main.route)
+                        }
+                    }
+                    else {
+                        viewModel.addNote(note = Note(title = name, name = name,
+                            calories = calories,
+                            proteins = proteins, fats = fats,
+                            carbs = carbs, comment = comment)
+                        ) {
+                            navController.navigate(NavRoute.Main.route)
+                        }
                     }
                 }
             ) {

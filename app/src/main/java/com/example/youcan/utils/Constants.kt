@@ -22,9 +22,15 @@ object Constants {
         const val NOTE_FOOD_NAME = "Food name"
         const val NOTE_COMMENT = "Note comment"
         const val ADD_NOTE = "Add note"
+
         const val TITLE = "title"
         const val NAME = "name"
-        const val SUBTITLE = "subtitle"
+        const val COMMENT = "comment"
+        const val CALORIES = "calories"
+        const val PROTEINS = "proteins"
+        const val FATS = "fats"
+        const val CARBS = "carbs"
+
         const val ROOM_DATABASE = "Room database"
         const val FIREBASE_DATABASE = "Firebase database"
         const val WHAT_WE_WILL_USE = "What we will use"
