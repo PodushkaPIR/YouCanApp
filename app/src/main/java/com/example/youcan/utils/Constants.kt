@@ -31,8 +31,8 @@ object Constants {
         const val FATS = "fats"
         const val CARBS = "carbs"
 
-        const val ROOM_DATABASE = "Room database"
-        const val FIREBASE_DATABASE = "Firebase database"
+        const val LOCAL_INFO = "Local info"
+        const val ONLINE_INFO = "Online info"
         const val WHAT_WE_WILL_USE = "What we will use"
         const val ID = "Id"
         const val NONE = "none"

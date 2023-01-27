@@ -101,7 +101,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                         .width(200.dp)
                         .padding(vertical = 8.dp)
                 ) {
-                    Text(text = Constants.Keys.ROOM_DATABASE)
+                    Text(text = Constants.Keys.LOCAL_INFO)
                 }
                 Button(
                     onClick = {
@@ -113,7 +113,7 @@ fun StartScreen(navController: NavHostController, viewModel: MainViewModel) {
                         .width(200.dp)
                         .padding(vertical = 8.dp)
                 ) {
-                    Text(text = Constants.Keys.FIREBASE_DATABASE)
+                    Text(text = Constants.Keys.ONLINE_INFO)
                 }
             }
         }
